@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="card mt-4">
+        <div class="card-header">
+            Article Text
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ article.text }}</p>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <form id="article-form" method="POST" action="/">
+            <div class="form-group">
+                <label for="article_link">Article Link:</label>
+                <input type="text" class="form-control" id="article_link" name="article_link">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Global Context Crosscheck Result</h2>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Verdict: {{ article.global_context_crosscheck_result_verdict }}</h5>
+                <p class="card-text">{{ article.global_context_crosscheck_result_details }}</p>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Bias Verdict</h2>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Verdict: {{ article.bias_verdict_verdict }}</h5>
+                <p class="card-text">{{ article.bias_verdict_details }}</p>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Sentiment Analysis</h2>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Verdict: {{ article.sentiment_analysis_verdict }}</h5>
+                <p class="card-text">{{ article.sentiment_analysis_details }}</p>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Narrative Consistency Result</h2>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Verdict: {{ article.narrative_consistency_result_verdict }}</h5>
+                <p class="card-text">{{ article.narrative_consistency_result_details }}</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
