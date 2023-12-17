@@ -51,7 +51,7 @@ def perform_narrative_consistency_check(link):
     (And at the end of the response) Sources: ...'''
 
     # Reload Bard with the new initial prompt
-    token = 'eQg5DwNw_DgKtSBI6WBJvbeAQza9zJEeDLDHoM-4bVcpUxkIlHhsh-lv25wFnAlVl0jnAw.'
+    token = 'dQhIwV8k6dQHeZRqlECFXNx4CVtuq-5ZKGZjh8ui0MdsU8lhgBXfkVFacasWjDM4HeNDTQ.'
     bard3 = Bard(token=token)
     a = bard3.get_answer(narrative_consistency_prompt)['content']
     print('Initial Bard3 Narrative Consistency Prompt loaded')
@@ -84,7 +84,7 @@ def perform_narrative_consistency_check(link):
 #     (And at the end of the response) Sources: ...'''
 
 #     # Reload Bard with the new initial prompt
-#     token = 'eQg5DwNw_DgKtSBI6WBJvbeAQza9zJEeDLDHoM-4bVcpUxkIlHhsh-lv25wFnAlVl0jnAw.'
+#     token = 'dQhIwV8k6dQHeZRqlECFXNx4CVtuq-5ZKGZjh8ui0MdsU8lhgBXfkVFacasWjDM4HeNDTQ.'
 #     bard2 = Bard(token=token)
 #     a = bard2.get_answer(global_context_prompt)['content']
 #     print('Initial Bard2 Global Context Prompt loaded')
@@ -116,7 +116,7 @@ def perform_bias_verdict(link):
     (And at the end of the response) Sources: ...'''
 
     # Reload Bard with the new initial prompt
-    token = 'eQg5DwNw_DgKtSBI6WBJvbeAQza9zJEeDLDHoM-4bVcpUxkIlHhsh-lv25wFnAlVl0jnAw.'
+    token = 'dQhIwV8k6dQHeZRqlECFXNx4CVtuq-5ZKGZjh8ui0MdsU8lhgBXfkVFacasWjDM4HeNDTQ.'
     bard1 = Bard(token=token)
     a = bard1.get_answer(bias_prompt)['content']
     print('Initial Bard1 Bias Prompt loaded')
@@ -148,7 +148,7 @@ def bard_setup(setup_prompt='''I want you to act as a detective writing his blog
     #                             The format of your blog should be as follows: "Statement 1: ...,  (And at the very beginning of the response) Final Verdict: ... , Score: .../100
     #                             Verdict:(overall accuracy level) ... and so on, 
     #                              (And at the end of the response) Sources: ...".'''):
-    token = 'eQg5DwNw_DgKtSBI6WBJvbeAQza9zJEeDLDHoM-4bVcpUxkIlHhsh-lv25wFnAlVl0jnAw.'
+    token = 'dQhIwV8k6dQHeZRqlECFXNx4CVtuq-5ZKGZjh8ui0MdsU8lhgBXfkVFacasWjDM4HeNDTQ.'
     bard = Bard(token=token)    
     a=bard.get_answer(setup_prompt)['content']
 
@@ -170,6 +170,7 @@ def bard_analysis(link):
 
 def calculate_total_score(score1a,score1b, score2, score3, score4):
     
+    print("SCORES BEFORE PROCESSING")
     print(score1a)
     print(score1b)
     print(score2)
@@ -189,19 +190,22 @@ def calculate_total_score(score1a,score1b, score2, score3, score4):
     except:
         pass
 
-    print(score1a)
-    print(score1b)
-    print(score2)
-    print(score3)
-    print(score4)
 
     # take first integer values until
     score2=score2.split('/')[0]
     score3=score3.split('/')[0]
     score4=score4.split('/')[0]
 
+    print("SCORES AFTER PROCESSING")
+    print(score1a)
+    print(score1b)
+    print(score2)
+    print(score3)
+    print(score4)
+
     # round score 1
-    score1=round(score1)
+    score1a = round(float(score1a))
+    score1b = round(float(score1b))
     return {
         'polarity_score': int(score1a),
         'subjectivity_score': int(score1b),
