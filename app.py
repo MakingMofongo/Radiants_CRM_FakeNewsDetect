@@ -3,6 +3,7 @@ from newspaper import Article
 from textblob import TextBlob
 from bardapi import Bard
 import re
+import requests
 
 app = Flask(__name__)
 
@@ -51,8 +52,21 @@ def perform_narrative_consistency_check(link):
     (And at the end of the response) Sources: ...'''
 
     # Reload Bard with the new initial prompt
-    token = 'dQhIwV8k6dQHeZRqlECFXNx4CVtuq-5ZKGZjh8ui0MdsU8lhgBXfkVFacasWjDM4HeNDTQ.'
-    bard3 = Bard(token=token)
+    token = 'eQg5DwNw_DgKtSBI6WBJvbeAQza9zJEeDLDHoM-4bVcpUxkIlHhsh-lv25wFnAlVl0jnAw.'
+    session = requests.Session()
+    session.cookies.set("__Secure-1PSID", "eQg5DwNw_DgKtSBI6WBJvbeAQza9zJEeDLDHoM-4bVcpUxkIlHhsh-lv25wFnAlVl0jnAw.")
+    session.cookies.set( "__Secure-1PSIDCC", "ABTWhQE-XlIOfpk9T43mIve7q8W12sTQET5bgHOL87dYb687uOlRwaBOyOsVuGHbvUw9eNT9nw")
+    session.cookies.set("__Secure-1PSIDTS", "sidts-CjEBPVxjStFnzh1FxoaobKs0ejbTpqmyPkCwTVRH5l2yopt3RNO68iU2v7M4NZ9merqbEAA")
+    session.headers = {
+            "Host": "bard.google.com",
+            "X-Same-Domain": "1",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.4472.114 Safari/537.36",
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+            "Origin": "https://bard.google.com",
+            "Referer": "https://bard.google.com/",
+    }
+    bard3 = Bard(token=token)    
+
     a = bard3.get_answer(narrative_consistency_prompt)['content']
     print('Initial Bard3 Narrative Consistency Prompt loaded')
 
@@ -84,7 +98,7 @@ def perform_narrative_consistency_check(link):
 #     (And at the end of the response) Sources: ...'''
 
 #     # Reload Bard with the new initial prompt
-#     token = 'dQhIwV8k6dQHeZRqlECFXNx4CVtuq-5ZKGZjh8ui0MdsU8lhgBXfkVFacasWjDM4HeNDTQ.'
+#     token = 'eQg5DwNw_DgKtSBI6WBJvbeAQza9zJEeDLDHoM-4bVcpUxkIlHhsh-lv25wFnAlVl0jnAw.'
 #     bard2 = Bard(token=token)
 #     a = bard2.get_answer(global_context_prompt)['content']
 #     print('Initial Bard2 Global Context Prompt loaded')
@@ -111,12 +125,12 @@ def perform_bias_verdict(link):
     Especially consider the ideological leanings of the news organization and the writer's history.
     Throughly visit and go through relevent articles on the web to gather the info, thoughtfully explain why something might be biased, 
     back up claims with facts, and provide the correct information for any biases detected in the article. 
-    The format of your blog should be as follows: 'Article: ..., (And at the very beginning of the response) Final Verdict: ... , Score: .../100 (more is better),
+    The format of your blog should be as follows: 'Article: ..., (And at the very beginning of the response) Final Verdict: ...
     Verdict:(overall bias level) ... and so on,
     (And at the end of the response) Sources: ...'''
 
     # Reload Bard with the new initial prompt
-    token = 'dQhIwV8k6dQHeZRqlECFXNx4CVtuq-5ZKGZjh8ui0MdsU8lhgBXfkVFacasWjDM4HeNDTQ.'
+    token = 'eQg5DwNw_DgKtSBI6WBJvbeAQza9zJEeDLDHoM-4bVcpUxkIlHhsh-lv25wFnAlVl0jnAw.'
     bard1 = Bard(token=token)
     a = bard1.get_answer(bias_prompt)['content']
     print('Initial Bard1 Bias Prompt loaded')
@@ -148,7 +162,19 @@ def bard_setup(setup_prompt='''I want you to act as a detective writing his blog
     #                             The format of your blog should be as follows: "Statement 1: ...,  (And at the very beginning of the response) Final Verdict: ... , Score: .../100
     #                             Verdict:(overall accuracy level) ... and so on, 
     #                              (And at the end of the response) Sources: ...".'''):
-    token = 'dQhIwV8k6dQHeZRqlECFXNx4CVtuq-5ZKGZjh8ui0MdsU8lhgBXfkVFacasWjDM4HeNDTQ.'
+    token = 'eQg5DwNw_DgKtSBI6WBJvbeAQza9zJEeDLDHoM-4bVcpUxkIlHhsh-lv25wFnAlVl0jnAw.'
+    session = requests.Session()
+    session.cookies.set("__Secure-1PSID", "bard __Secure-1PSID token")
+    session.cookies.set( "__Secure-1PSIDCC", "bard __Secure-1PSIDCC token")
+    session.cookies.set("__Secure-1PSIDTS", "bard __Secure-1PSIDTS token")
+    session.headers = {
+            "Host": "bard.google.com",
+            "X-Same-Domain": "1",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.4472.114 Safari/537.36",
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+            "Origin": "https://bard.google.com",
+            "Referer": "https://bard.google.com/",
+    }
     bard = Bard(token=token)    
     a=bard.get_answer(setup_prompt)['content']
 
